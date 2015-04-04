@@ -10,7 +10,7 @@ public class ReadStringFromFileLineByLine {
 		Vector<Circuit> circuits = new Vector<Circuit>(0);
 		Vector<Juggler> jugglers = new Vector<Juggler>(0);
 		try {
-			File file = new File("juggleInputTest2.txt");
+			File file = new File("juggleInputTest.txt");
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			StringBuffer stringBuffer = new StringBuffer();
@@ -90,7 +90,7 @@ public class ReadStringFromFileLineByLine {
 			}
 			for(int j = 0; j < jugglers.size();j++) {
 				String CircuitChoiceString = null;
-				for(int k = 0; k < jugglers.get(j).getCircuitChoices().size(); k ++) {
+				for(int k = 0; k < jugglers.get(j).getCircuitChoices().size(); k++) {
 					if(k == 0) CircuitChoiceString = jugglers.get(j).getCircuitChoices().get(k);
 					else CircuitChoiceString += "," + jugglers.get(j).getCircuitChoices().get(k);
 				}
@@ -100,36 +100,30 @@ public class ReadStringFromFileLineByLine {
 			}
 			//
 			//
+			//jugglers.get(7).insJugglerNextCC(circuits, jugglersPerCircuit);
+			int exJug = -1;
 			for(int a = 0; a < jugglers.size(); a++) {
-				Circuit jugglersCCC = circuits.get(Integer.parseInt(jugglers.get(a).getCircuitChoices()
-						.get(jugglers.get(a).getCCCI()).substring(1))); // jugglers current circuit choice
-				int currDot = jugglersCCC.getDotProduct(jugglers.get(a));
-				//System.out.println(jugglersCCC.getJugglersPresent().size() + " " + currDot);
-				if(jugglersCCC.getJugglersPresent().size() == 0) {
-					jugglersCCC.insertJuggler(jugglers.get(a).getName(),0);
-					System.out.println("Inserting " + jugglers.get(a).getName() + 
-							" to " + jugglersCCC.getName() + " " + currDot + " " + "0 Size 0");
-				}
-				
+				//System.out.println("a: " + a + " | J Name: " + jugglers.get(a).getName());
+				 exJug = jugglers.get(a).insJugglerNextCC(circuits, jugglersPerCircuit);
+				System.out.println("Just inserted: " + jugglers.get(a).getName());
+					if( exJug == -1)
+					System.out.println("We're all groovy --- Keep going");
 				else {
-				for(int b = 0; b < jugglersCCC.getJugglersPresent().size(); b++) {
-					//System.out.println("Entering second for Loop -- " + jugglersCCC.getJugglersPresent());
-					if(currDot > jugglersCCC.getDotProduct(jugglers
-							.get(Integer.parseInt(jugglersCCC.getJugglersPresent()
-									.get(b).substring(1))))) {
-						System.out.println("Inserting " + jugglers.get(a).getName() + 
-								" to " + jugglersCCC.getName() + " " + currDot + " " + b);
-						jugglersCCC.insertJuggler(jugglers.get(a).getName(), b);
-						System.out.println("Circuit: " + jugglersCCC.getName() + " Jugglers Present: " + 
-						jugglersCCC.getJugglersPresent());
-						if(jugglersCCC.getJugglersPresent().size() > jugglersPerCircuit) 
-							System.out.println("This list is full! need to remove " + 
-						jugglersCCC.getJugglersPresent().lastElement());
-						break;
+					while(exJug != -1){
+						System.out.println("exJug= " + exJug);
+						jugglers.get(exJug).incCCCI();
+						System.out.println("Name: " + jugglers.get(exJug).getName() + 
+								" CCCI: " + jugglers.get(exJug).getCCCI());
+						System.out.println("exJug before: " + exJug);
+						exJug = jugglers.get(exJug).insJugglerNextCC(circuits, jugglersPerCircuit);
+						System.out.println("exJug after: " + exJug);
 					}
-				}
+
 				}
 				//System.out.println(circuits.get(0).getJugglersPresent().get(0));
+			}
+			for(int d = 0; d < circuits.size();d++) {
+				System.out.println("Circuit: " + circuits.get(d).getName() + " | " + circuits.get(d).getJugglersPresent());
 			}
 			//System.out.printf("Jugglers Per Circuit: %d\n", jugglersPerCircuit);
 			

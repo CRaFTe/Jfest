@@ -3,6 +3,7 @@ public class Circuit {
 private String name;
 private int handEye, endurance, pizzazz;
 private Vector<String> jugglersPresent;
+private Vector<Integer> dotProductValues;
 Circuit()
 {}
 Circuit(String name1, int handEye1, int endurance1, int pizzazz1, Vector<String>jugglersPresent1) {
@@ -11,6 +12,7 @@ Circuit(String name1, int handEye1, int endurance1, int pizzazz1, Vector<String>
 	endurance = endurance1;
 	pizzazz = pizzazz1;
 	jugglersPresent = jugglersPresent1;
+	dotProductValues = new Vector<Integer>(0);
 }
 public String getName() {
 	return name;
@@ -34,5 +36,14 @@ public int getDotProduct(Juggler juggler) {
 	return juggler.getEndurance() * this.getEndurance() + 
 			juggler.getHandEye() * this.getHandEye() + 
 			juggler.getPizzazz() * this.getPizzazz();
+}
+public Vector<Integer> getDotProductValues() {
+	return dotProductValues;
+}
+public void insDotProductValue(int index, int value) {
+	dotProductValues.add(index, value);
+}
+public void remDotProductValue() {
+	dotProductValues.remove(this.dotProductValues.lastElement());
 }
 }
