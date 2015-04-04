@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Vector;
 
 public class ReadStringFromFileLineByLine {
@@ -10,7 +11,7 @@ public class ReadStringFromFileLineByLine {
 		Vector<Circuit> circuits = new Vector<Circuit>(0);
 		Vector<Juggler> jugglers = new Vector<Juggler>(0);
 		try {
-			File file = new File("juggleInputTest.txt");
+			File file = new File("juggleInputTest2.txt");
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			StringBuffer stringBuffer = new StringBuffer();
@@ -42,7 +43,7 @@ public class ReadStringFromFileLineByLine {
 						Vector<String> circuitChoicesJuggler = new Vector<String>(0);
 						for(int j = 0; j < CCJ.length;j++) {
 							circuitChoicesJuggler.add(CCJ[j]);
-							//System.out.println("Inserting" + CCJ[j]);
+							//writer.println("Inserting" + CCJ[j]);
 						}
 						Juggler J = new Juggler(words[1],handEyeJuggler, enduranceJuggler, 
 								pizzazzJuggler, circuitChoicesJuggler);
@@ -54,22 +55,22 @@ public class ReadStringFromFileLineByLine {
 					
 					
 				//----- Commented out for initial line reading testing -------	
-				//System.out.println(line.substring(0,1));
+				//writer.println(line.substring(0,1));
 					//for(int i = 1; i <= line.length();i++) {
-						//System.out.printf(line.substring(i-1,i));
+						//writer.printf(line.substring(i-1,i));
 					//}
 				/*if(line.substring(0, 1).equals("C")) {
-					System.out.printf("\nThis is a circuit: ");
+					writer.printf("\nThis is a circuit: ");
 					String words[] = line.split(" ");
 					for(int i = 0; i < words.length; i++) {
-						System.out.printf(words[i] + " ");
+						writer.printf(words[i] + " ");
 					}
 				}
 				if(line.substring(0, 1).equals("J")) {
-					System.out.printf("\nThis is a juggler: ");
+					writer.printf("\nThis is a juggler: ");
 					String words[] = line.split(" ");
 					for(int i = 0; i < words.length; i++) {
-						System.out.printf(words[i] + " ");
+						writer.printf(words[i] + " ");
 					}
 				}*/
 				}
@@ -77,14 +78,14 @@ public class ReadStringFromFileLineByLine {
 				stringBuffer.append("\n");
 			}
 			fileReader.close();
-			//System.out.println("Contents of file:");
-			//System.out.println(stringBuffer.toString());
-			
+			//writer.println("Contents of file:");
+			//writer.println(stringBuffer.toString());
+			PrintWriter writer = new PrintWriter("juggleFestOutput.txt","UTF-8");
 			// Print info and file Contents
 			int jugglersPerCircuit = jugglers.size() / circuits.size();
-			System.out.printf("Jugglers Per Circuit: %d\n", jugglersPerCircuit);
+			writer.printf("Jugglers Per Circuit: %d%n", jugglersPerCircuit);
 			for(int i = 0; i < circuits.size();i++){
-				System.out.printf("%s, %d, %d, %d\n", circuits.get(i).getName(), 
+				writer.printf("%s, %d, %d, %d%n", circuits.get(i).getName(), 
 						circuits.get(i).getHandEye(), circuits.get(i).getEndurance(), 
 						circuits.get(i).getPizzazz());
 			}
@@ -94,7 +95,7 @@ public class ReadStringFromFileLineByLine {
 					if(k == 0) CircuitChoiceString = jugglers.get(j).getCircuitChoices().get(k);
 					else CircuitChoiceString += "," + jugglers.get(j).getCircuitChoices().get(k);
 				}
-				System.out.printf("%s, %d, %d, %d, %s\n", jugglers.get(j).getName(), 
+				writer.printf("%s, %d, %d, %d, %s%n", jugglers.get(j).getName(), 
 						jugglers.get(j).getHandEye(), jugglers.get(j).getEndurance(), 
 						jugglers.get(j).getPizzazz(), CircuitChoiceString);
 			}
@@ -103,30 +104,33 @@ public class ReadStringFromFileLineByLine {
 			//jugglers.get(7).insJugglerNextCC(circuits, jugglersPerCircuit);
 			int exJug = -1;
 			for(int a = 0; a < jugglers.size(); a++) {
-				//System.out.println("a: " + a + " | J Name: " + jugglers.get(a).getName());
+				//writer.println("a: " + a + " | J Name: " + jugglers.get(a).getName());
 				 exJug = jugglers.get(a).insJugglerNextCC(circuits, jugglersPerCircuit);
-				System.out.println("Just inserted: " + jugglers.get(a).getName());
+				writer.println("Just inserted: " + jugglers.get(a).getName());
 					if( exJug == -1)
-					System.out.println("We're all groovy --- Keep going");
+					writer.println("We're all groovy --- Keep going");
 				else {
 					while(exJug != -1){
-						System.out.println("exJug= " + exJug);
+						//writer.println("exJug= " + exJug);
 						jugglers.get(exJug).incCCCI();
-						System.out.println("Name: " + jugglers.get(exJug).getName() + 
-								" CCCI: " + jugglers.get(exJug).getCCCI());
-						System.out.println("exJug before: " + exJug);
+						//writer.println("Name: " + jugglers.get(exJug).getName() + 
+								//" CCCI: " + jugglers.get(exJug).getCCCI());
+						//writer.println("exJug before: " + exJug);
 						exJug = jugglers.get(exJug).insJugglerNextCC(circuits, jugglersPerCircuit);
-						System.out.println("exJug after: " + exJug);
+						//writer.println("exJug after: " + exJug);
 					}
 
 				}
-				//System.out.println(circuits.get(0).getJugglersPresent().get(0));
+				//writer.println(circuits.get(0).getJugglersPresent().get(0));
 			}
+			int totalJugglersInCircuits = 0;
 			for(int d = 0; d < circuits.size();d++) {
-				System.out.println("Circuit: " + circuits.get(d).getName() + " | " + circuits.get(d).getJugglersPresent());
+				writer.println("Circuit: " + circuits.get(d).getName() + " | " + circuits.get(d).getJugglersPresent());
+				totalJugglersInCircuits+= circuits.get(d).getJugglersPresent().size();
 			}
-			//System.out.printf("Jugglers Per Circuit: %d\n", jugglersPerCircuit);
-			
+			writer.println("Total Jugglers in Circuits: " + totalJugglersInCircuits);
+			//writer.printf("Jugglers Per Circuit: %d\n", jugglersPerCircuit);
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
