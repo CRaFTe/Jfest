@@ -129,16 +129,23 @@ public class ReadStringFromFileLineByLine {
 				totalJugglersInCircuits+= circuits.get(d).getJugglersPresent().size();
 			}
 			writer.println("Total Jugglers in Circuits: " + totalJugglersInCircuits);
-			Vector<Juggler> jugglersClone = new Vector<Juggler>(jugglers);
-			for(int f = 0; f < jugglers.size();f++) {
-				for(int h = 0; h < circuits.size();h++) {
-					if(circuits.get(h).getJugglersPresent().contains(jugglers.get(f).getName()))
-						jugglersClone.removeElement(jugglers.get(f));
-				}
-			}
-			for(int j = 0; j < jugglersClone.size();j++) {
-				writer.println(jugglersClone.get(j).getName());
-			}
+//			Vector<Juggler> jugglersClone = new Vector<Juggler>(jugglers);
+//			for(int f = 0; f < jugglers.size();f++) {
+//				for(int h = 0; h < circuits.size();h++) {
+//					if(circuits.get(h).getJugglersPresent().contains(jugglers.get(f).getName()))
+//						jugglersClone.removeElement(jugglers.get(f));
+//				}
+//			}
+//			for(int j = 0; j < jugglersClone.size();j++) {
+//				writer.println(jugglersClone.get(j).getName() +  " CCCI " + jugglersClone.get(j).getCCCI());
+//				jugglers.get(j).insJugglerNextCC(circuits, jugglersPerCircuit);
+//			}
+//			int totalJugglersInCircuits2 = 0;
+//			for(int d = 0; d < circuits.size();d++) {
+//				writer.println("Circuit: " + circuits.get(d).getName() + " | " + circuits.get(d).getJugglersPresent());
+//				totalJugglersInCircuits2+= circuits.get(d).getJugglersPresent().size();
+//			}
+//			writer.println("Total Jugglers in Circuits: " + totalJugglersInCircuits2);
 			//writer.printf("Jugglers Per Circuit: %d\n", jugglersPerCircuit);
 			writer.close();
 		} catch (IOException e) {

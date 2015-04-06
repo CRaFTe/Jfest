@@ -91,6 +91,7 @@ public int insJugglerNextCC(Vector<Circuit> circuits, int jugglersPerCircuit) { 
 					//System.out.println("This list is full! need to remove " + 
 				//jugglersCCC.getJugglersPresent().lastElement());
 					jugToRem = Integer.parseInt(jugglersCCC.getJugglersPresent().lastElement().substring(1));
+					//System.out.println("Removing: J" + jugToRem);
 					jugglersCCC.getJugglersPresent().remove(jugglersCCC.getJugglersPresent().lastElement());
 					jugglersCCC.remDotProductValue();
 					
@@ -99,7 +100,7 @@ public int insJugglerNextCC(Vector<Circuit> circuits, int jugglersPerCircuit) { 
 				//System.out.println("Got to before break");
 				break;
 			}
-			else if(b == jugglersCCC.getJugglersPresent().size()-1 && currDot < jugglersCCC.getDotProductValues().get(b)) {
+			else if(b == jugglersCCC.getJugglersPresent().size()-1) {
 				//System.out.println("Inserting " + this.getName() + 
 						//" to " + jugglersCCC.getName() + " Dot: " + currDot + " Index: " + (b+1));
 				jugglersCCC.insertJuggler(this.getName(), b+1);
