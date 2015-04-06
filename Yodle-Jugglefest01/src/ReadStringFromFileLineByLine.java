@@ -129,6 +129,34 @@ public class ReadStringFromFileLineByLine {
 				totalJugglersInCircuits+= circuits.get(d).getJugglersPresent().size();
 			}
 			writer.println("Total Jugglers in Circuits: " + totalJugglersInCircuits);
+			
+			
+			
+			// Generate the output file
+			//
+			//
+			writer.println("---------------------------");
+			for(int m = 0; m < circuits.size(); m++) {
+				writer.printf(circuits.get(m).getName()+ " ");
+				for(int n = 0; n < circuits.get(m).getJugglersPresent().size(); n++) {
+					writer.printf(circuits.get(m).getJugglersPresent().get(n) + " ");
+					for(int p = 0; p <jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1))).getCircuitChoices().size(); p++) {
+						writer.print(circuits.get(Integer.parseInt(jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1))).getCircuitChoices().get(p).substring(1))).getName() + ":");
+						writer.print(circuits.get(Integer.parseInt(jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1))).getCircuitChoices().get(p).substring(1))).getDotProduct(jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1)))));
+						if(p!= jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1))).getCircuitChoices().size() - 1)
+							writer.print(" ");
+					}
+				writer.printf(", ");
+				}
+				writer.printf("%n");
+			}
+			int c1970Total = 0;
+			for(int q = 0; q < circuits.get(1970).getJugglersPresent().size(); q++) {
+				c1970Total+= Integer.parseInt(circuits.get(1970).getJugglersPresent().get(q).substring(1));
+			}
+			writer.println("Circuit 1970 Juggler's Present Numbers Total: " + c1970Total);
+			
+			
 //			Vector<Juggler> jugglersClone = new Vector<Juggler>(jugglers);
 //			for(int f = 0; f < jugglers.size();f++) {
 //				for(int h = 0; h < circuits.size();h++) {
