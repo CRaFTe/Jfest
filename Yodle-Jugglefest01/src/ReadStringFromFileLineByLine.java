@@ -1,3 +1,16 @@
+/*
+ * Created by Micah T. Moore to solve the Jugglefest problem presented by Yodle.
+ * Description: Inserts jugglers into circuits based on their preference and 
+ * uses their dot product to determine how good of a fit they are for that circuit.  
+ * If the issue arises that a juggler is trying to be inserted into an already full circuit,
+ * the juggler will still be inserted in the appropriate dot product descending order
+ * and the juggler with the lowest dot product (at the end of the list) will be removed
+ * and found a new circuit, based on their next preference.  If a juggler has exhausted
+ * all of his circuit choice preferences and still hasn't found a suitable circuit, it
+ * is found a best fit (the highest dot product) circuit from the non-full circuits left.
+ * This continues until all jugglers have been assigned to circuits.
+ */
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,7 +24,7 @@ public class ReadStringFromFileLineByLine {
 		Vector<Circuit> circuits = new Vector<Circuit>(0); // holds all the circuits
 		Vector<Juggler> jugglers = new Vector<Juggler>(0); // holds all the jugglers
 		try {
-			File file = new File("juggleInputTest2.txt"); // what input file to read from
+			File file = new File("jugglefest.txt"); // what input file to read from
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			StringBuffer stringBuffer = new StringBuffer();
@@ -55,7 +68,7 @@ public class ReadStringFromFileLineByLine {
 				stringBuffer.append("\n");
 			}
 			fileReader.close();
-			PrintWriter writer = new PrintWriter("juggleFestOutput.txt","UTF-8");
+			PrintWriter writer = new PrintWriter("jugglefestOutput.txt","UTF-8");
 			int jugglersPerCircuit = jugglers.size() / circuits.size();
 			int exJug = -1; // holds the return from inserting a juggler, initialized to -1
 			for(int a = 0; a < jugglers.size(); a++) {
