@@ -57,27 +57,6 @@ public class ReadStringFromFileLineByLine {
 			fileReader.close();
 			PrintWriter writer = new PrintWriter("juggleFestOutput.txt","UTF-8");
 			int jugglersPerCircuit = jugglers.size() / circuits.size();
-			
-			// Print info and file Contents
-			// un-comment these lines to see the juggler and circuit info
-
-//			writer.printf("Jugglers Per Circuit: %d%n", jugglersPerCircuit);
-//			for(int i = 0; i < circuits.size();i++){
-//				writer.printf("%s, %d, %d, %d%n", circuits.get(i).getName(), 
-//						circuits.get(i).getHandEye(), circuits.get(i).getEndurance(), 
-//						circuits.get(i).getPizzazz());
-//			}
-//			for(int j = 0; j < jugglers.size();j++) {
-//				String CircuitChoiceString = null;
-//				for(int k = 0; k < jugglers.get(j).getCircuitChoices().size(); k++) {
-//					if(k == 0) CircuitChoiceString = jugglers.get(j).getCircuitChoices().get(k);
-//					else CircuitChoiceString += "," + jugglers.get(j).getCircuitChoices().get(k);
-//				}
-//				writer.printf("%s, %d, %d, %d, %s%n", jugglers.get(j).getName(), 
-//						jugglers.get(j).getHandEye(), jugglers.get(j).getEndurance(), 
-//						jugglers.get(j).getPizzazz(), CircuitChoiceString);
-//			}
-
 			int exJug = -1; // holds the return from inserting a juggler, initialized to -1
 			for(int a = 0; a < jugglers.size(); a++) {
 				 exJug = jugglers.get(a).insJugglerNextCC(circuits, jugglersPerCircuit);
@@ -85,39 +64,26 @@ public class ReadStringFromFileLineByLine {
 					if( exJug == -1) {
 						// if a juggler wasn't inserted into a full list, insJuggler will return -1 to exJug
 						// and we can continue inserting the next juggler
-						//System.out.println("We're all groovy --- Keep going");
 					}
 					
 				else { // exJug != -1, there is a juggler to remove
 					while(exJug != -1){ // while inserts keep happening on full circuit lists
 						jugglers.get(exJug).incCCCI(); // increment the circuit choice of the juggler
 						exJug = jugglers.get(exJug).insJugglerNextCC(circuits, jugglersPerCircuit);
-						// try to insert the juggler in it's next cicuit choice
+						// try to insert the juggler in it's next circuit choice
 					}
 
 				}
-			}
-			// what each circuit holds after all insertions are complete:
-			// un-Comment to see the jugglers present in each circuit
-//			int totalJugglersInCircuits = 0;
-//			for(int d = 0; d < circuits.size();d++) {
-//				writer.println("Circuit: " + circuits.get(d).getName() + " | " + circuits.get(d).getJugglersPresent());
-//				totalJugglersInCircuits+= circuits.get(d).getJugglersPresent().size();
-//			}
-//			writer.println("Total Jugglers in Circuits: " + totalJugglersInCircuits);
-			
-			
-			
+			}			
 			// Generate the output file
 			//
 			//
-			//writer.println("---------------------------");
 			for(int m = 0; m < circuits.size(); m++) {
 				writer.printf(circuits.get(m).getName() + " ");
 				for(int n = 0; n < circuits.get(m).getJugglersPresent().size(); n++) {
 					writer.printf(circuits.get(m).getJugglersPresent().get(n) + " ");
-					for(int p = 0; p < jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1)))
-							.getCircuitChoices().size(); p++) {
+					for(int p = 0; p < Math.min(jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1)))
+							.getCircuitChoices().size(),10); p++) {
 						writer.print(circuits.get(Integer.parseInt(jugglers.get(Integer.parseInt(circuits.get(m)
 								.getJugglersPresent().get(n).substring(1))).getCircuitChoices().get(p)
 								.substring(1))).getName() + ":");
@@ -125,7 +91,7 @@ public class ReadStringFromFileLineByLine {
 								.getJugglersPresent().get(n).substring(1))).getCircuitChoices().get(p).substring(1)))
 								.getDotProduct(jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n)
 										.substring(1)))));
-						if(p!= jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1))).getCircuitChoices().size() - 1)
+						if(p!= Math.min((jugglers.get(Integer.parseInt(circuits.get(m).getJugglersPresent().get(n).substring(1))).getCircuitChoices().size() - 1), 9))
 							writer.print(" ");
 					}
 				writer.printf(", ");
@@ -133,12 +99,14 @@ public class ReadStringFromFileLineByLine {
 				writer.printf("%n");
 			}
 			// printing to console C1970's Jugglers Present Numbers Total
-			// remove this if running on the smaller input file
-			int c1970Total = 0;
-			for(int q = 0; q < circuits.get(1970).getJugglersPresent().size(); q++) {
-				c1970Total+= Integer.parseInt(circuits.get(1970).getJugglersPresent().get(q).substring(1));
+			if(circuits.size() >= 1970) {
+				int c1970Total = 0;
+				for(int q = 0; q < circuits.get(1970).getJugglersPresent().size(); q++) {
+					c1970Total+= Integer.parseInt(circuits.get(1970).getJugglersPresent().get(q).substring(1));
+				}
+				System.out.println("Circuit 1970 Juggler's Present Numbers Total: " + c1970Total);
 			}
-			System.out.println("Circuit 1970 Juggler's Present Numbers Total: " + c1970Total);
+		
 			
 		
 			writer.close();

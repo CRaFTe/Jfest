@@ -15,10 +15,6 @@ endurance = endurance1;
 pizzazz = pizzazz1;
 circuitChoices = new Vector<String>(circuitChoices1);
 currentCircuitChoiceIndex = 0;
-
-
-
-
 }
 public String getName() {
 	return name;
@@ -45,11 +41,10 @@ public void addCircuitChoice(String circuitChoice) {
 	circuitChoices.add(circuitChoices.size(),circuitChoice);
 }
 public int insJugglerNextCC(Vector<Circuit> circuits, int jugglersPerCircuit) { 
-	//will return juggler number removed if list full, OW -1
+	// will return juggler number removed if list full, OW -1
 	int jugToRem = -1;
 	if(this.getCCCI() >= this.getCircuitChoices().size()) {
 		// if the juggler has exhausted all it's circuit choices, assign an available circuit to it's circuit choices
-		//System.out.println(this.getName() + " Has exhausted all his circuit choices");
 		int oldDot = 0;
 		int newDot = 0;
 		Circuit currCircuit = null;
@@ -107,5 +102,4 @@ public int insJugglerNextCC(Vector<Circuit> circuits, int jugglersPerCircuit) {
 	}
 	return jugToRem;
 }
-
 }
