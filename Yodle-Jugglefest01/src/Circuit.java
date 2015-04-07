@@ -26,7 +26,7 @@ public int getEndurance() {
 public int getPizzazz() {
 	return pizzazz;
 }
-public Vector<String> getJugglersPresent() {
+public Vector<String> getJugglersPresent() { 
 	return jugglersPresent;
 }
 public void insertJuggler(String juggler, int index) {
